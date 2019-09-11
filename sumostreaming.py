@@ -7,35 +7,40 @@ import interface as ifd
 #ser = serial.Serial(port='/dev/tty.usbserial-AD01QBMW', timeout=0)
 
 controller = ifd.SumoController()
-controller.move(10,-90)
-controller.move(50)
+
 
 while(True):
 
-   frame = controller.get_pic()
+    frame = controller.get_pic()
 
-   nparr = np.fromstring(frame, np.uint8)
-   #img_np = cv2.imdecode(nparr, cv2.CV_LOAD_IMAGE_COLOR)
-   img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    if (frame):
 
-   #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-   #controller.move(10)
+        nparr = np.fromstring(frame, np.uint8)
+        #img_np = cv2.imdecode(nparr, cv2.CV_LOAD_IMAGE_COLOR)
+        img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-   cv2.imshow("SumoScreen", img_np)
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        #controller.move(10)
 
-   command = cv2.waitKey(1)
+        cv2.imshow("SumoScreen", img_np)
 
-   if command & 0xFF == ord('w'):
-       controller.move(10)
-   elif command & 0xFF == ord('a'):
-       controller.move(10,-10)
-   elif command & 0xFF == ord('d'):
-       controller.move(10,10)
-   elif command & 0xFF == ord('s'):
-       controller.move(-100)
+    command = cv2.waitKey(1)
 
-   if command & 0xFF == ord('q'):
-      break
+    if command & 0xFF == ord('w'):
+        controller.move(10)
+    elif command & 0xFF == ord('W'):
+        controller.move(100)
+    elif command & 0xFF == ord('a'):
+        controller.move(10,-10)
+    elif command & 0xFF == ord('d'):
+        controller.move(10,10)
+    elif command & 0xFF == ord('s'):
+        controller.move(-30)
+    elif command & 0xFF == ord('S'):
+        controller.move(-100)
+
+    if command & 0xFF == ord('q'):
+        break
 
 #When everything done, release the capture
 cv2.destroyAllWindows()

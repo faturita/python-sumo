@@ -269,5 +269,5 @@ if __name__ == '__main__':
     controller.move(50)
     controller.store_pic()
     controller.move(-50, duration=0.5)
-    with open('output.jpg', 'wb') as f:
+    with open('./data/output.jpg', 'wb') as f:
         f.write(controller.get_pic())
